@@ -11,9 +11,9 @@ function submit () {
   $('form').submit(function (e) {
     event.preventDefault(); 
 
-    let capture = parseInt( $('#maxResults').val());
+    let capture = $('#maxResults').val();
   
-    let userMax = capture - 1;
+    let userMax = capture;
     const userState = $('#state').val();
 
     console.log ('Max Results is ' + capture);
@@ -47,7 +47,7 @@ function displayResults (parks, userMax) {
 
   console.log(parks);
 
-  let parksHTML = parks.data.map(displayPark).join('\n');
+  let parksHTML = parks.data.map(displayPark);
   $('#results').append(`<h2 class= 'resultTitle' target="_blank">Showing ${userMax} Results for ${state}</h2><ol>${parksHTML}</ol>`); 
 }
 
