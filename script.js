@@ -21,6 +21,7 @@ function submit () {
 
       return getParksInfo(userMax, userState)
       .then(function (data) {
+        console.log('hello', data);
         displayResults(data, capture);
       });
   });   
@@ -37,17 +38,19 @@ function route(path){
 function getParksInfo (userMax, userState) {
 
   state = userState;
-  return route(`/parks?stateCode=${userState.trim()}&limit=${userMax}`)
+  return route(`/parks?stateCode=${userState}&limit=${userMax}`)
   .then (response => response.json())
+  .then (response => {
+     return response.data;
+  });
 }
 
 
 
 function displayResults (parks, userMax) {
-
-  console.log(parks);
-
-  let parksHTML = parks.data.map(displayPark);
+  console.log(parks[0])
+  let parksHTML = parks.map(displayPark);
+  console.log(parksHTML)
   $('#results').append(`<h2 class= 'resultTitle' target="_blank">Showing ${userMax} Results for ${state}</h2><ol>${parksHTML}</ol>`); 
 }
 
