@@ -12,20 +12,25 @@ function submit () {
     event.preventDefault(); 
 
     let capture = $('#maxResults').val();
-  
-    let userMax = capture;
-    const userState = $('#state').val();
-
+    let newCapture = capture.replace(/\s+/g, '');
+    let userMax = newCapture;
+    let state = $('#state').val();
+    let newState = state.replace(/\s+/g, '');
+    let userState = newState;
+    $('#maxResults').val('');
+    $('#state').val('');
     console.log ('Max Results is ' + capture);
     console.log ('State(s) is/are ' + userState);
 
       return getParksInfo(userMax, userState)
       .then(function (data) {
         console.log('hello', data);
-        displayResults(data, capture);
+        displayResults(data, newCapture);
       });
   });   
 }
+
+
 
 function route(path){
   return fetch (BASE_URL + path, {
@@ -51,6 +56,7 @@ function displayResults (parks, userMax) {
   console.log(parks[0])
   let parksHTML = parks.map(displayPark);
   console.log(parksHTML)
+  $('#results').empty();
   $('#results').append(`<h2 class= 'resultTitle' target="_blank">Showing ${userMax} Results for ${state}</h2><ol>${parksHTML}</ol>`); 
 }
 
